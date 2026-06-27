@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #3b82f6; /* blue-500 */
+  --primary-dark: #2563eb; /* blue-600 */
+  --surface: #ffffff;
+  --background: #f3f4f6; /* gray-100 */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: #1f2937;
+  overflow: hidden; /* App-like feel, scroll inside containers */
+}
+
+/* Custom Scrollbar for a premium look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Micro-animations */
+.btn-animate {
+  transition: transform 0.1s ease-in-out, box-shadow 0.2s ease;
+}
+.btn-animate:active {
+  transform: scale(0.97);
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Hide sections by default */
+.app-section {
+  display: none;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+.app-section.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sidebar active link styling */
+.nav-item {
+  transition: all 0.2s ease;
+}
+.nav-item.active {
+  background-color: #eff6ff; /* blue-50 */
+  color: var(--primary-dark);
+  border-right: 4px solid var(--primary);
+}
+
+/* Print Styles for Receipts and Reports */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  #print-receipt-container, #print-receipt-container * {
+    visibility: visible;
+  }
+  #print-receipt-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    padding: 2mm;
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #000;
+  }
+
+  #print-report-container, #print-report-container *, #adj-table-container, #adj-table-container * {
+    visibility: visible;
+  }
+  #print-report-container, #adj-table-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  color: white;
+  font-weight: 500;
+  animation: slideIn 0.3s ease forwards;
+  opacity: 0;
+  transform: translateX(100%);
+}
+.toast.success { background-color: #10b981; }
+.toast.error { background-color: #ef4444; }
+.toast.warning { background-color: #f59e0b; }
+.toast.info { background-color: #3b82f6; }
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideOut {
+  to { opacity: 0; transform: translateX(100%); }
+}
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Role Based Access Control (RBAC) Hidden Elements */
+body[data-role="cashier"] .admin-only { display: none !important; }
+body[data-role="pharmacist"] .admin-only { display: none !important; }
+
+/* Global Density Scaling */
+html {
+  font-size: 13.5px; /* Condense entire UI */
+}
